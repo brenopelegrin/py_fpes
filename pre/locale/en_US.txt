@@ -1,0 +1,1 @@
+Welcome to the electrostatic particle friction electrization simulator!;"How many particles do you want to simulate (integer): ";"Starting the simulation with {} particles."
