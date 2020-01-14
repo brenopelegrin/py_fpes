@@ -1,2 +1,2 @@
-# Particle Friction Electrification Simulator
- Particle friction electrification simulator. Written in Python.
+# Friction Particle Electrification Simulator
+ Friction particle electrification simulator. Written in Python.
