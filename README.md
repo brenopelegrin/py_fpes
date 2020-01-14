@@ -1,2 +1,2 @@
-# pycontactelectrification
- Particle contact electrification simulator. Written in Python
+# pyfrictionelectrization
+ Particle friction electrification simulator. Written in Python.
