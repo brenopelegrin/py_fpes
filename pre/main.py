@@ -10,34 +10,57 @@ locale=''
 localefile="locale/"
 localefile+=locale
 localefile+=".txt"
+internalfile="locale/internal/"
+
+def localeinternal(locale):
+    global internalfile
+    internalfile = "locale/internal/"
+    internalfile += locale
+    internalfile += ".txt"
+
+def internal(line, script):
+    linesinternal = []
+    with open(internalfile) as f:
+        linesinternal = f.read().splitlines()
+    if script == 1:
+        m = eval(linesinternal[line])
+        return (m)
+    else:
+        return (linesinternal[line])
 
 def definelocale():
-    langavaliable = os.listdir("locale")
+    langavaliable = []
+    with os.scandir("locale") as listOfEntries:
+        for entry in listOfEntries:
+            if entry.is_file():
+                langavaliable.append(entry.name)
     langavaliable = [sub.replace('.txt', '') for sub in langavaliable]
     print("Languages avaliable:")
     for i in langavaliable:
         print("*", i)
     global locale
     global localefile
-    locale=str(input("Please choose a language (case-sensitive): "))
+    locale = str(input("Please choose a language (case-sensitive): "))
     if locale in langavaliable:
-        print("Defined language: ", locale)
+        print("Selected language: ", locale)
         print("Continuing...")
         localefile = "locale/"
         localefile += locale
         localefile += ".txt"
+        localeinternal(locale)
     else:
         print("\n[!] Language not found. Please type again.\n")
         definelocale()
 
 def lang(line, script):
-    mylines = []
-    mylines = np.loadtxt(localefile, comments="#", delimiter=";", unpack=False, dtype=str)
+    localelines = []
+    with open(localefile) as f:
+        localelines = f.read().splitlines()
     if script == 1:
-        n=eval(mylines[line])
-        return(n)
+        n = eval(localelines[line])
+        return (n)
     else:
-        return(mylines[line])
+        return (localelines[line])
 
 def arraytostring(chosen):
     b=''
@@ -45,18 +68,33 @@ def arraytostring(chosen):
         b = b + str(x) + ' '
     return (b)
 
+def storedecision():
+    choice2 = str(input(lang(19,1)))
+    if choice2 == lang(20,1) or choice2 == lang(21,1):
+        print(lang(22,1))
+        nametable=internal(7,1)
+        nametable+=str(t)
+        nametable+=".csv"
+        with open(nametable, 'w') as csv_file:
+            df1.to_csv(path_or_buf=csv_file)
+    elif choice2 == lang(26,1) or choice2 == lang(27,1):
+        print(lang(23,1))
+    else:
+        print(lang(28,1))
+        storedecision()
+
 def store(chosen, rq, t, choice, particlenumarray):
-    print("\nStoring information about t = {} in the table...".format(t))
+    print(lang(17,1).format(t))
     #funcao do eixo x: f(x) = 2x + 3
     xaxis = 3+(2*t)
     if t > 1:
-        namet="Charge in t="
+        namet=internal(10,1)
         namet+=str(t)
-        namef="Friction in t="
+        namef=internal(9,1)
         namef+=str(t)
         xaxis2=int(xaxis)
         xaxis3=int((xaxis-1))
-        value="NaN"
+        value=internal(8,1)
         df1.insert(xaxis3, namef, value) #insert friction column
         df1.insert(xaxis2, namet, value) #insert time column
         print(df1)
@@ -100,45 +138,43 @@ def store(chosen, rq, t, choice, particlenumarray):
             oldvalue = df1.iloc[[index], [xaxisincharge]].values[0]
             df1.iloc[[index], [xaxis]] = oldvalue
     print(df1)
-    print("Do you want to save this table as table_t{}.csv ?".format(t))
-    choice2=str(input("Press Y or N (Y for Yes, N for No): "))
-    if choice2 == "Y" or choice2 == 'y':
-        print("Saving...")
-        nametable="table_t"
-        nametable+=str(t)
-        nametable+=".csv"
-        with open(nametable, 'w') as csv_file:
-            df1.to_csv(path_or_buf=csv_file)
-    else:
-        print("Okay.")
-        pass
-    if choice == 'Y' or choice == 'y':
+    print(lang(18,1).format(t))
+    storedecision()
+    if choice == lang(20,1) or choice == lang(21,1):
         t = int(t + 1)
         choose(particles, df1, t)
     else:
         pass
 
+def colidedecision(chosen, rq, t, particlenumarray):
+    choice=str(input(lang(16,1)))
+    if choice == lang(20,1) or choice == lang(21,1) or choice == lang(26,1) or choice == lang(27,1):
+        store(chosen, rq, t, choice, particlenumarray)
+    else:
+        print(lang(28,1))
+        colidedecision(chosen, rq, t, particlenumarray)
+
 def colide(chosen, t, particlenumarray):
     print(clear)
-    print("Particles selected at the instant t = {}: {}".format(t, chosen))
-    print("Rubbing...")
+    print(lang(11,1).format(t, chosen))
+    print(lang(12,1))
+    print(lang(25,1))
     charges = float(0)
     listsize = len(chosen)
     for x in range(listsize):
         y = int((chosen[x]))
-        value = float(dfavaliable.at[y, 'Charge'])
+        value = float(dfavaliable.at[y, internal(6,1)])
         charges = charges + float(value)
         #debug:#print("Actual value dfavaliable.at[y, 'Charge']: ", value)
         #debug:#print("Sum of charges(debug): ", charges)
-    print("Sum of charges: ", charges)
+    print(lang(13,1).format(charges))
     if listsize !=0:
         rq = float((charges / listsize))
     else:
         rq = int(0)
-    print("Resultant charge: {}/{} = {}".format(charges, listsize, rq))
-    print("Do you want to continue simulation?")
-    choice=str(input("Press Y or N (Y for Yes, N for No): "))
-    store(chosen, rq, t, choice, particlenumarray)
+    print(lang(14,1).format(charges, listsize, rq))
+    print(lang(15,1))
+    colidedecision(chosen, rq, t, particlenumarray)
 
 def choose(particles, df1, t):
     del avaliablearray[:]
@@ -147,13 +183,13 @@ def choose(particles, df1, t):
     print(clear)
     xaxis=int(1+(2*t))
     #debug:#print("x axis: {}".format(xaxis))
-    print("Please choose the particles to friction on the time instant t =",t)
+    print(lang(4,1).format(t))
     if t == 0:
         for x in np.arange(1, particles+1):
             x=int(x)
-            dfavaliable.loc[x, 'Particle number'] = x
+            dfavaliable.loc[x, internal(0,1)] = x
             avaliablearray.append(x)
-            dfavaliable.loc[x, 'Charge'] = df1.loc[x, 'Initial charge']
+            dfavaliable.loc[x, internal(6,1)] = df1.loc[x, internal(1,1)]
 
             y=int(x)
             #create array with particle numbers
@@ -167,47 +203,47 @@ def choose(particles, df1, t):
             particlenumarray.append(y)
 
             #transform dataframe particle numbers in editable array
-            dfavaliable.at[y, 'Particle number'] = y
+            dfavaliable.at[y, internal(0,1)] = y
             avaliablearray.append(y)
             #debug:#print("y: {}, x: {} ".format(y, xaxis))
             value = float(df1.iloc[[yindex], [xaxis]].values[0])
             #debug:#print("value: {}".format(value))
-            dfavaliable.loc[y, 'Charge'] = value
+            dfavaliable.loc[y, internal(6,1)] = value
     print(dfavaliable)
     a=''
     while a != '0':
         print("\n")
-        print("Particles selected: ", chosen)
-        print("Particles avaliable: ", avaliablearray)
-        print('Type 0 at any moment to stop.')
-        a=input("Select particles to friction: ")
+        print(lang(5,1).format(chosen))
+        print(lang(6,1).format(avaliablearray))
+        print(lang(7,1))
+        a=input(lang(8,1))
         if a != '0':
             c = int(a)
-            if c in avaliablearray:
+            if c in avaliablearray or c in chosen:
                 if (c in chosen):
-                    print("\n[!] The particle {} has already been chosen. ".format(c))
+                    print(lang(9,1).format(c))
                 else:
                     chosen.append(c)
                     avaliablearray.remove(c)
             else:
-                print("\n[!] The particle {} doesn't exist.".format(c))
+                print(lang(10,1).format(c))
     colide(chosen, t, particlenumarray)
 
 definelocale()
 print(clear)
-print("-------------------------------------------------------------------------------")
-print(lang(0,0))
+print(lang(24,1))
+print(lang(0,1))
 particles=int(input(lang(1,1)))
 print(lang(2,1).format(particles))
-print("-------------------------------------------------------------------------------")
-df1 = pd.DataFrame(index=np.arange(1, particles+1), columns=('Particle number', 'Initial charge', 'Friction', 'Charge in t=0', 'Friction in t=0','Charge in t=1') )
-dfavaliable = pd.DataFrame(index=np.arange(1, particles+1), columns=('Particle number', 'Charge'))
+print(lang(24,1))
+df1 = pd.DataFrame(index=np.arange(1, particles+1), columns=(internal(0,1), internal(1,1), internal(2,1), internal(3,1), internal(4,1),internal(5,1)))
+dfavaliable = pd.DataFrame(index=np.arange(1, particles+1), columns=(internal(0,1), internal(6,1)))
 
 for x in np.arange(1, particles+1):
-    df1.loc[x, 'Particle number'] = x
+    df1.loc[x, internal(0,1)] = x
 
 for y in np.arange(1, particles+1):
-    charge=input('Type the value of the initial charge of the particle {} in Coulombs (C): '.format(y))
-    df1.loc[y, 'Initial charge'] = float(charge)
+    charge=input(lang(3,1).format(y))
+    df1.loc[y, internal(1,1)] = float(charge)
 print(df1)
 choose(particles, df1, t)

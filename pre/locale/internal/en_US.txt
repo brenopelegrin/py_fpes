@@ -1,0 +1,11 @@
+'Particle number'
+'Initial charge'
+'Initial friction'
+'Charge in t=0'
+'Friction in t=0'
+'Charge in t=1'
+'Charge'
+"table_t"
+"NaN"
+"Friction in t="
+"Charge in t="

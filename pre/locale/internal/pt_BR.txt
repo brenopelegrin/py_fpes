@@ -1,0 +1,11 @@
+'Número da partícula'
+'Carga inicial'
+'Atrito inicial'
+'Carga em t=0'
+'Atrito em t=0'
+'Carga em t=1'
+'Carga'
+"tabela_t"
+"Vazio"
+"Atrito em t="
+"Carga em t="
