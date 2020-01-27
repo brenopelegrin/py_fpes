@@ -2,6 +2,7 @@
 
 This script can simulate the friction electrification of several particles and store the data in CSV tables.
 >**NOTE:** The project is still under development.
+
 >Currently, development files are placed inside the "/pre" directory. When the first stable version is published, the files will be inside the "/release" directory.
 
 ## Getting Started
@@ -27,6 +28,7 @@ pip install os
 ## Installation
 
 >**NOTE:** Since the project does not yet have stable versions, replace the "/release" directory with "/pre" when executing commands.
+
 Clone the [py_fpes](https://github.com/br3n0henrique/py_fpes) repository to your directory:
 
 ```bash
@@ -46,6 +48,7 @@ chmod +x main.py
 ## Usage
 
 >**NOTE:** Since the project does not yet have stable versions, replace the "/release" directory with "/pre" when executing commands.
+
 Just run the 'main.py' script:
 ```bash
 python3 /mydirectory/release/main.py
