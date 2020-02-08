@@ -1,6 +1,6 @@
 # Friction Particle Electrification Simulator (py_fpes)
 
-This script can simulate the friction electrification of several particles and store the data in CSV tables.
+This script can simulate the frictional electrification of several particles and store the data in CSV tables.
 >**NOTE:** The project is still under development.
 
 >Currently, development files are placed inside the "/pre" directory. When the first stable version is published, the files will be inside the "/release" directory.
