@@ -35,7 +35,7 @@ Clone the [py_fpes](https://github.com/br3n0henrique/py_fpes) repository to your
 cd /mydirectory/
 ```
 ```bash
-$ git clone https://github.com/br3n0henrique/py_fpes.git
+git clone https://github.com/br3n0henrique/py_fpes.git
 ```
 
 Make the 'main.py' script executable:
